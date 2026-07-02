@@ -1,0 +1,78 @@
+1) Open files identified
+
+Commands:
+echo "Linux I/O Investigation" > io_test.txt
+cat io_test.txt
+
+Output:
+Linux I/O Investigation
+
+Observations:
+The echo command created a new text file and the cat command displayed its contents. This confirms that the file can be accessed and read successfully.
+
+2) File descriptor observations
+
+Command:
+ls -l /proc/$$/fd
+
+Output:
+total 0
+lrwx------ 1 rijul_bose rijul_bose 64 Jul  2 16:15 0 -> /dev/pts/0
+lrwx------ 1 rijul_bose rijul_bose 64 Jul  2 16:15 1 -> /dev/pts/0
+lrwx------ 1 rijul_bose rijul_bose 64 Jul  2 16:15 2 -> /dev/pts/0
+lrwx------ 1 rijul_bose rijul_bose 64 Jul  2 16:15 255 -> /dev/pts/0
+
+Observations:
+Linux uses file descriptors to manage input and output operations. File descriptor 0,1 and 2 represent standard input, standard output and standard error respectively.
+
+3) Output redirection and error redirection results
+
+Commands:
+echo "Hello Linux" > output.txt
+cat output.txt
+ls missingfile 2> error.txt
+cat error.txt
+
+Output:
+abc
+
+ls: cannot access 'missingfile': No such file or directory
+
+Observations:
+The > operator redirects normal output to a file. 
+2> redirects error messages to a separate file. 
+This keeps standard output and errors organized for easy access and use.
+
+4) Resource limits observed
+
+Command:
+ulimit -a
+
+Output:
+real-time non-blocking time  (microseconds, -R) unlimited
+core file size              (blocks, -c) 0
+data seg size               (kbytes, -d) unlimited
+scheduling priority                 (-e) 0
+file size                   (blocks, -f) unlimited
+pending signals                     (-i) 30333
+max locked memory           (kbytes, -l) 65536
+max memory size             (kbytes, -m) unlimited
+open files                          (-n) 10240
+pipe size                (512 bytes, -p) 8
+POSIX message queues         (bytes, -q) 819200
+real-time priority                  (-r) 0
+stack size                  (kbytes, -s) 8192
+cpu time                   (seconds, -t) unlimited
+max user processes                  (-u) 30333
+virtual memory              (kbytes, -v) unlimited
+file locks                          (-x) unlimited
+
+Observations:
+The ulimit command displays the current resource limits for the shell being used.
+Eg: The maximum number of open files and processes.
+
+5) Explanation of how Linux manages file I/O
+
+Linux manages file I/O using file descriptors. Standard input, standard output and standard error are represented by the file descriptors 0, 1, and 2 respectively. Redirection operators allow us to store command output or error messages in files instead of displaying them on the terminal making them accessible and reusable if and when needed.
+
+

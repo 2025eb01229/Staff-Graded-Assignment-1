@@ -1,0 +1,87 @@
+1) Inode Numbers of all files
+
+Commands:
+echo "Linux Link Experiment" > original.txt
+ln original.txt hardlink.txt
+ln -s original.txt softlink.txt
+ls -li
+
+Output:
+total 12
+38822 -rw-r--r-- 2 rijul_bose rijul_bose   22 Jul  2 15:12 hardlink.txt
+38822 -rw-r--r-- 2 rijul_bose rijul_bose   22 Jul  2 15:12 original.txt
+38776 drwxr-xr-x 2 rijul_bose rijul_bose 4096 Jul  2 15:07 screenshots
+38824 lrwxrwxrwx 1 rijul_bose rijul_bose   12 Jul  2 15:13 softlink.txt -> original.txt
+
+Observations:
+We created a file named original.txt. Then a hard link and a symbolic link were created. The ls -li command displays the inode numbers and shows that the original file and hard link share the same inode, while the symbolic link has a different inode.
+
+2) Comparison Between Hard Link and Symbolic Link
+
+Hard Link:
+• It shares the same inode as the original file.
+• It points directly to the file data.
+• It continues to work even if the original filename is deleted.
+
+Symbolic Link:
+• It has its own inode.
+• It stores the pathname of the original file.
+• It becomes broken if the original file is deleted.
+
+Observations:
+Hard links provide another name for the same file, whereas symbolic links act as shortcuts pointing to another file.
+
+3) Effect of deleting the original file
+
+Commands:
+rm original.txt
+ls -li
+cat hardlink.txt
+cat softlink.txt
+
+Output:
+total 12
+38825 -rw-r--r-- 1 rijul_bose rijul_bose 1242 Jul  2 15:44 Link_Analysis_Report.txt
+38822 -rw-r--r-- 1 rijul_bose rijul_bose   22 Jul  2 15:12 hardlink.txt
+38776 drwxr-xr-x 2 rijul_bose rijul_bose 4096 Jul  2 15:07 screenshots
+38824 lrwxrwxrwx 1 rijul_bose rijul_bose   12 Jul  2 15:13 softlink.txt -> original.txt
+
+Linux Link Experiment
+
+cat: softlink.txt: No such file or directory
+
+Observations:
+After deleting the original file, the hard link still accesses the file contents because it shares the same inode. But the symbolic link becomes invalid because its target file no longer exists.
+
+4) Metadata Collected Using Linux Utilities
+
+Commands:
+stat hardlink.txt
+stat softlink.txt
+
+Output:
+  File: hardlink.txt
+  size: 22              Blocks: 8          IO Block: 4096   regular file
+Device: 8,48    Inode: 38822       Links: 1
+Access: (0644/-rw-r--r--)  Uid: ( 1000/rijul_bose)   Gid: ( 1000/rijul_bose)
+Access: 2026-07-02 15:45:41.813369787 +0000
+Modify: 2026-07-02 15:12:19.050144965 +0000
+Change: 2026-07-02 15:45:24.025376595 +0000
+ Birth: 2026-07-02 15:12:19.050144965 +0000
+
+  File: 'softlink.txt' -> 'original.txt'
+  size: 12              Blocks: 0          IO Block: 4096   symbolic link
+Device: 8,48    Inode: 38824       Links: 1
+Access: (0777/lrwxrwxrwx)  Uid: ( 1000/rijul_bose)   Gid: ( 1000/rijul_bose)
+Access: 2026-07-02 15:13:16.210118226 +0000
+Modify: 2026-07-02 15:13:06.646122264 +0000
+Change: 2026-07-02 15:13:06.646122264 +0000
+ Birth: 2026-07-02 15:13:06.646122264 +0000
+
+Observations:
+The stat command displays metadata such as inode number, permissions, ownership, etc. The metadata confirms the relationship between the hard link and the symbolic link.
+
+5) Conclusions Drawn from the Experiment
+
+This experiment demonstrates that hard links and symbolic links behave differently. Hard links share the same inode as the original file and continue to work after the original filename has been deleted. Symbolic links have a separate inode and only store the path to the original file, hence they become broken when the original file is removed.
+

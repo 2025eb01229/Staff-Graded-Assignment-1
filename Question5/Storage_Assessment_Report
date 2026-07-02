@@ -1,0 +1,102 @@
+Storage Health Assessment Report
+
+1) Available storage devices
+
+Command:
+lsblk
+
+Output:
+NAME MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+sda    8:0    0 364.8M  1 disk
+sdb    8:16   0 144.5M  1 disk
+sdc    8:32   0     2G  0 disk [SWAP]
+sdd    8:48   0     1T  0 disk /mnt/wslg/distro
+                               /	
+
+Observations:
+The lsblk command displays the available storage devices and their partitions. It helps in identifying the disks connected to the Linux system.
+
+2) Mounted file systems
+
+Command:
+df -h
+
+Output:
+Filesystem      Size  Used Avail Use% Mounted on
+none            3.8G     0  3.8G   0% /usr/lib/modules/6.6.114.1-microsoft-standard-WSL2
+none            3.8G  4.0K  3.8G   1% /mnt/wsl
+drivers         260G  192G   69G  74% /usr/lib/wsl/drivers
+/dev/sdd       1007G  1.6G  955G   1% /
+none            3.8G   76K  3.8G   1% /mnt/wslg
+none            3.8G     0  3.8G   0% /usr/lib/wsl/lib
+rootfs          3.8G  2.8M  3.8G   1% /init
+none            3.8G  532K  3.8G   1% /run
+none            3.8G     0  3.8G   0% /run/lock
+none            3.8G     0  3.8G   0% /run/shm
+none            3.8G  100K  3.8G   1% /mnt/wslg/versions.txt
+none            3.8G  100K  3.8G   1% /mnt/wslg/doc
+C:\             260G  192G   69G  74% /mnt/c
+D:\             216G   95G  122G  44% /mnt/d
+tmpfs           3.8G     0  3.8G   0% /tmp
+none            1.0M     0  1.0M   0% /run/credentials/systemd-journald.service
+none            1.0M     0  1.0M   0% /run/credentials/systemd-resolved.service
+none            1.0M     0  1.0M   0% /run/credentials/getty@tty1.service
+tmpfs           760M   12K  760M   1% /run/user/1000
+
+Observations:
+The df -h command displays all mounted file systems along with their total size, used space, available space and mount points.
+
+3) Disk usage statistics
+
+Command:
+du -sh 
+
+Output:
+12K     .
+
+Observations:
+The du -sh command displays the total disk space used by the current directory.
+
+4) Inode utilization
+
+Command:
+df -i
+
+Output:
+Filesystem       Inodes   IUsed    IFree IUse% Mounted on
+none             971916       5   971911    1% /usr/lib/modules/6.6.114.1-microsoft-standard-WSL2
+none             971916       2   971914    1% /mnt/wsl
+drivers             999 -999001  1000000     - /usr/lib/wsl/drivers
+/dev/sdd       67108864   45389 67063475    1% /
+none             971916      23   971893    1% /mnt/wslg
+none             971916       5   971911    1% /usr/lib/wsl/lib
+rootfs           970663      12   970651    1% /init
+none             971916     553   971363    1% /run
+none             971916       2   971914    1% /run/lock
+none             971916       1   971915    1% /run/shm
+none             971916      59   971857    1% /mnt/wslg/versions.txt
+none             971916      59   971857    1% /mnt/wslg/doc
+C:\                 999 -999001  1000000     - /mnt/c
+D:\                 999 -999001  1000000     - /mnt/d
+tmpfs           1048576       9  1048567    1% /tmp
+none               1024       1     1023    1% /run/credentials/systemd-journald.service
+none               1024       1     1023    1% /run/credentials/systemd-resolved.service
+none               1024       1     1023    1% /run/credentials/getty@tty1.service
+tmpfs            194383      47   194336    1% /run/user/1000
+
+Observations:
+The df -i command displays inode usage for each mounted file system. By monitoring inode utilization, we can ensure that the system does not run out of inodes even if disk space is available.
+
+5) Storage health observations
+
+We observe that the storage devices and mounted file systems are functioning normally. The available disk space and inode usage indicate that the system has sufficient resources for regular operations.
+
+6) Recommendations for improving storage utilization
+
+Some recommendations for improving storage utilization are:
+
+Regularly remove unnecessary files to free up disk space. 
+Monitor disk and inode usage periodically using Linux utilities such as df and du.
+Organizing files efficiently and performing routine maintenance can help in improving storage utilization and system performance.
+
+

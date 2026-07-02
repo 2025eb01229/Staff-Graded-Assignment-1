@@ -1,0 +1,84 @@
+Secure Project Workspace Report
+
+1) Directory Structure created
+
+Command:
+mkdir ProjectWorkspace
+mkdir ProjectWorkspace/docs
+mkdir ProjectWorkspace/data
+touch ProjectWorkspace/docs/plan.txt
+touch ProjectWorkspace/data/project_data.txt
+ls -R
+
+Output: 
+.:
+ProjectWorkspace  screenshots
+
+./ProjectWorkspace:
+data  docs
+
+./ProjectWorkspace/data:
+project_data.txt
+
+./ProjectWorkspace/docs:
+documentation.txt
+
+./screenshots:
+
+Observations: The mkdir command creates directories.
+The touch command creates files.
+The ls -R command shows the structure of the directory.
+
+2) File Permissions before and after modifications
+
+Commands:
+ls -ld ProjectWorkspace
+ls -l ProjectWorkspace
+
+Output (Before):
+total 8
+drwxr-xr-x 2 rijul_bose rijul_bose 4096 Jul  2 13:51 data
+drwxr-xr-x 2 rijul_bose rijul_bose 4096 Jul  2 13:50 docs
+
+Commands:
+chmod -R 750 ProjectWorkspace
+ls -ld ProjectWorkspace
+ls -l ProjectWorkspace
+
+Output (After):
+total 8
+drwxr-x--- 2 rijul_bose rijul_bose 4096 Jul  2 13:51 data
+drwxr-x--- 2 rijul_bose rijul_bose 4096 Jul  2 13:50 docs
+
+Observations: The workspace initially had the default permissions that were assigned by Linux. The chmod command changes permissions and changing them to 750 gives the owner full access and denies all permissions to all others.
+
+3) Ownership Details
+
+Commands:
+ls -ld ProjectWorkspace
+ls -l ProjectWorkspace
+
+Output:
+drwxr-x--- 4 rijul_bose rijul_bose 4096 Jul  2 13:48 ProjectWorkspace
+total 8
+drwxr-x--- 2 rijul_bose rijul_bose 4096 Jul  2 13:51 data
+drwxr-x--- 2 rijul_bose rijul_bose 4096 Jul  2 13:50 docs
+
+Observations:
+The ls command displays the owner and the group associated with the project workspace and its files.
+
+4) Umask value used
+
+Command:
+umask
+
+Output:
+0022
+
+Observations:
+The umask command displays the default permission mask that is used when creating new files and directories. 
+
+5) Explanation of how permissions protect project data
+
+Linux file permissions help us to protect project data by controlling who can read, write, and execute files and directories.
+Assigning permissions help in preventing unauthorized users from modifying and viewing project files improving the security of the project. 
